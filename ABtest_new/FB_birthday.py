@@ -37,34 +37,3 @@ time.sleep(1)
 
 
 
-
-
-'''
-k='//*[@id="home_birthdays"]/div/div/div/div/a/div/div/span/span[2]'
-n=driver.find_element_by_xpath(k).get_attribute('textContent')
- # To get the number of friends to be wished
-num=n[0]
-num=int(num)
-print(num)
-
-
-message= "Happy Birthday !!"
-driver.get('https://www.facebook.com/events/birthdays/') 
-#time.sleep(3)
-
-bday_list=driver.find_elements_by_xpath("//*[@class ='enter_submit uiTextareaNoResize uiTextareaAutogrow uiStreamInlineTextarea inlineReplyTextArea mentionsTextarea textInput']") 
-
-c=0
-for element in bday_list: 
-    element_id = str(element.get_attribute('id')) 
-    XPATH = '//*[@id ="' + element_id + '"]'
-    post = driver.find_element_by_xpath(XPATH) #To fetch the box where to enter text
-    post.send_keys("Happy Birthday, Best wishes.") # To enter the bday wish
-    #time.sleep(1)
-    post.send_keys(Keys.RETURN) #To send the wish
-    c=c+1
-    if(c>num):  # This prevents putting wishes for belated birthday
-        break
-
-driver.quit()
-'''
