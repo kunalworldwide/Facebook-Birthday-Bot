@@ -31,7 +31,8 @@ password_box.send_keys(password)
 sleep(60) #for 2 step otp
 
 birthdays = driver.find_elements_by_xpath('//*[@id="events_dashboard_calendar_container"]/div/article[1]/div//a')
-birthday_list_all=[]
+birthday_list=[]
+
 for birthday in birthdays:
     birthday_list.append(birthday.get_attribute("href"))
     
