@@ -11,7 +11,7 @@ chrome_options.add_experimental_option( "prefs",{'profile.managed_default_conten
 
 user_id=input("Enter user ID")
 password=input("Enter password")
-
+birthday_list=[]
 
 driver= webdriver.Chrome('/usr/local/bin/chromedriver',chrome_options=chrome_options)
 driver.get('https://m.facebook.com')
@@ -23,21 +23,21 @@ def wish_birthday():
     post_button.click()    
     return 0
 
+def get_birthday_list():
+    driver.get('https://m.facebook.com/birthdays')
+    sleep(10)
+    birthdays = driver.find_elements_by_xpath('//*[@id="events_dashboard_calendar_container"]/div/article[1]/div//a')
+    for birthday in birthdays:
+        birthday_list.append(birthday.get_attribute("href"))
+    birthday_list = list(OrderedDict.fromkeys(birthday_list))
+
 user_box = driver.find_element_by_id("m_login_email")       # For detecting the user id box
 user_box.send_keys(user_id)   
 password_box = driver.find_element_by_id("m_login_password")    # For detecting the password box
 password_box.send_keys(password) 
 
-sleep(60) #for 2 step otp
-
-birthdays = driver.find_elements_by_xpath('//*[@id="events_dashboard_calendar_container"]/div/article[1]/div//a')
-birthday_list=[]
-
-for birthday in birthdays:
-    birthday_list.append(birthday.get_attribute("href"))
-    
-birthday_list = list(OrderedDict.fromkeys(birthday_list))
-
+sleep(30) #for 2 step otp
+get_birthday_list()
 for link in birthday_list:
     driver.get(link)
     wish_birthday()
