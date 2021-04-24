@@ -30,14 +30,15 @@ def get_birthday_list():
     birthdays = driver.find_elements_by_xpath('//*[@id="events_dashboard_calendar_container"]/div/article[1]/div//a')
     for birthday in birthdays:
         birthday_list.append(birthday.get_attribute("href"))
-    birthday_list = list(OrderedDict.fromkeys(birthday_list))
+    birthday_list = list(OrderedDict.fromkeys(birthday_list))  #removing duplicate entries
 
 user_box = driver.find_element_by_id("m_login_email")       # For detecting the user id box
 user_box.send_keys(user_id)   
 password_box = driver.find_element_by_id("m_login_password")    # For detecting the password box
 password_box.send_keys(password) 
 
-sleep(30) #for 2 step otp
+sleep(30) #The wait is to enter authintication code like 2 factors etc..
+
 get_birthday_list()
 for link in birthday_list:
     driver.get(link)
