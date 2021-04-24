@@ -24,6 +24,7 @@ def wish_birthday():
     return 0
 
 def get_birthday_list():
+    birthday_list=[]
     driver.get('https://m.facebook.com/birthdays')
     sleep(10)
     birthdays = driver.find_elements_by_xpath('//*[@id="events_dashboard_calendar_container"]/div/article[1]/div//a')
