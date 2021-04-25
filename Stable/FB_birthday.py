@@ -4,6 +4,7 @@ import time
 from time import sleep
 from selenium.webdriver.common.keys import Keys
 from collections import OrderedDict
+from driverdownload import get_driver
 
 
 chrome_options = Options()
@@ -11,7 +12,7 @@ chrome_options.add_experimental_option( "prefs",{'profile.managed_default_conten
 
 user_id=input("Enter user ID")
 password=input("Enter password")
-birthday_list=[]
+
 
 driver= webdriver.Chrome('/usr/local/bin/chromedriver',chrome_options=chrome_options)
 driver.get('https://m.facebook.com')
@@ -31,6 +32,7 @@ def get_birthday_list():
     for birthday in birthdays:
         birthday_list.append(birthday.get_attribute("href"))
     birthday_list = list(OrderedDict.fromkeys(birthday_list))  #removing duplicate entries
+    return birthday_list
 
 user_box = driver.find_element_by_id("m_login_email")       # For detecting the user id box
 user_box.send_keys(user_id)   
@@ -39,8 +41,11 @@ password_box.send_keys(password)
 
 sleep(30) #The wait is to enter authintication code like 2 factors etc..
 
-get_birthday_list()
-for link in birthday_list:
+friends_name=get_birthday_list()
+
+print(friends_name)
+
+for link in friends_name:
     driver.get(link)
     wish_birthday()
     sleep(10)
