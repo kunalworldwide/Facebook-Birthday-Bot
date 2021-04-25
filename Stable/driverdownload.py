@@ -14,9 +14,9 @@ from sys import platform
 def get_driver():
     # Attempt to open the Selenium chromedriver. If it fails, download the latest chromedriver.
     driver = None
-    retry = True
+    retry = False
 
-    while retry:
+    while not retry :
         retry = False
         is_download = False
 
@@ -27,16 +27,18 @@ def get_driver():
         except SessionNotCreatedException as e:
             if 'This version of ChromeDriver' in e.msg:
                 is_download = True
+             
         except WebDriverException as e:
             if "wrong permissions" in e.msg:
                 st = os.stat('./chromedriver')
                 os.chmod('./chromedriver', st.st_mode | stat.S_IEXEC)
                 retry = True
+                
             elif "chromedriver' executable needs to be in PATH" in e.msg:
                 is_download = True
-
+                
         retry = is_download and download_driver()
-
+    
     return driver
 
 def download_driver():
@@ -106,3 +108,4 @@ def get_platform_filename():
     filename += '.zip'
 
     return filename
+get_driver()
