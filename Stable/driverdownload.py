@@ -106,6 +106,6 @@ def get_platform_filename():
         filename += 'win32'
 
     filename += '.zip'
-
+    
     return filename
 get_driver()
