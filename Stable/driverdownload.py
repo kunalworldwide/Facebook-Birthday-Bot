@@ -10,37 +10,50 @@ import re
 import zipfile
 import stat
 from sys import platform
+import platform as pt
 
 def get_driver():
     # Attempt to open the Selenium chromedriver. If it fails, download the latest chromedriver.
     driver = None
-    retry = False
+    retry = True
 
-    while not retry :
+    while retry:
         retry = False
         is_download = False
 
         try:
             options = webdriver.ChromeOptions()
             options.add_argument('--headless')
-            driver = webdriver.Chrome(chrome_options=options, executable_path='./chromedriver')
+            driver = webdriver.Chrome(chrome_options=options, executable_path='.\chromedriver')
         except SessionNotCreatedException as e:
             if 'This version of ChromeDriver' in e.msg:
                 is_download = True
-             
         except WebDriverException as e:
             if "wrong permissions" in e.msg:
                 st = os.stat('./chromedriver')
                 os.chmod('./chromedriver', st.st_mode | stat.S_IEXEC)
                 retry = True
-                
             elif "chromedriver' executable needs to be in PATH" in e.msg:
                 is_download = True
-                
+
         retry = is_download and download_driver()
-    
+
     return driver
 
+def get_chrome_version():
+    os_name = pt.system()
+    if os_name == 'Darwin':
+        installation_path = "/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome"
+    elif os_name == 'Windows':
+        installation_path = "C:\Program Files\Google\Chrome\Application\chrome.exe"
+    elif os_name == 'Linux':
+        installation_path = "/usr/bin/google-chrome"
+    else:
+        raise NotImplemented(f"Unknown OS '{os_name}'")
+
+    version_str = os.popen(f"{installation_path} --version").read().strip('Google Chrome ').strip()
+    return version_str
+    
 def download_driver():
     # Find the latest chromedriver, download, unzip, set permissions to executable.
     result = False
@@ -62,8 +75,8 @@ def download_driver():
         # Url of download html page.
         url = match.group(0)
         # Version of latest driver.
-        version = match.group(1)
-        driver_url = base_driver_url + version + '/' + file_name
+        version = get_chrome_version()
+        driver_url = base_driver_url + get_chrome_version() + '/' + file_name
 
         # Download the file.
         print('Version ' + version)
@@ -106,6 +119,9 @@ def get_platform_filename():
         filename += 'win32'
 
     filename += '.zip'
-    
+
     return filename
-get_driver()
+
+
+d = get_driver()
+d.get('https://www.google.com')

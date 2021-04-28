@@ -5,7 +5,7 @@ import getpass
 from time import sleep
 from selenium.webdriver.common.keys import Keys
 from collections import OrderedDict
-from driverdownload import get_driver
+#from driverdownload import get_driver
 from selenium.common.exceptions import NoSuchElementException
 
 
@@ -17,7 +17,7 @@ user_id=input("Enter user ID ")
 password=getpass.getpass(prompt="Enter password ")
 
 
-driver= webdriver.Chrome('/usr/local/bin/chromedriver',chrome_options=chrome_options)
+driver= webdriver.Chrome('./chromedriver',chrome_options=chrome_options)
 driver.get('https://m.facebook.com')
 
 def wish_birthday():
