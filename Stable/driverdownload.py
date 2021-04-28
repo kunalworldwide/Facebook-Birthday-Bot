@@ -11,7 +11,7 @@ import zipfile
 import stat
 from sys import platform
 import platform as pt
-
+cwd = os.getcwd()
 def get_driver():
     # Attempt to open the Selenium chromedriver. If it fails, download the latest chromedriver.
     driver = None
@@ -24,14 +24,14 @@ def get_driver():
         try:
             options = webdriver.ChromeOptions()
             options.add_argument('--headless')
-            driver = webdriver.Chrome(chrome_options=options, executable_path='.\chromedriver')
+            driver = webdriver.Chrome(chrome_options=options, executable_path='/home/jackreaper/Documents/Facebook-Birthday-Bot/Stable/chromedriver')
         except SessionNotCreatedException as e:
             if 'This version of ChromeDriver' in e.msg:
                 is_download = True
         except WebDriverException as e:
             if "wrong permissions" in e.msg:
-                st = os.stat('./chromedriver')
-                os.chmod('./chromedriver', st.st_mode | stat.S_IEXEC)
+                st = os.stat('/home/jackreaper/Documents/Facebook-Birthday-Bot/Stable/chromedriver')
+                os.chmod('/home/jackreaper/Documents/Facebook-Birthday-Bot/Stable/chromedriver', st.st_mode | stat.S_IEXEC)
                 retry = True
             elif "chromedriver' executable needs to be in PATH" in e.msg:
                 is_download = True

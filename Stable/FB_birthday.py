@@ -17,7 +17,7 @@ user_id=input("Enter user ID ")
 password=getpass.getpass(prompt="Enter password ")
 
 
-driver= webdriver.Chrome('./chromedriver',chrome_options=chrome_options)
+driver= webdriver.Chrome(chrome_options=chrome_options)
 driver.get('https://m.facebook.com')
 
 def wish_birthday():
