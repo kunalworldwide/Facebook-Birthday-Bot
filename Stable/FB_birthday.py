@@ -10,14 +10,11 @@ from selenium.common.exceptions import NoSuchElementException
 from selenium import webdriver
 from webdriver_manager.chrome import ChromeDriverManager
 
-
-
 chrome_options = Options()
 chrome_options.add_experimental_option( "prefs",{'profile.managed_default_content_settings.javascript': 2})
 
 user_id=input("Enter user ID ")
 password=getpass.getpass(prompt="Enter password ")
-
 
 driver= webdriver.Chrome(ChromeDriverManager().install(),chrome_options=chrome_options)#webdriver.Chrome(chrome_options=chrome_options)
 driver.get('https://m.facebook.com')
