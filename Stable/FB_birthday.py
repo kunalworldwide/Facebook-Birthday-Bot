@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 import time
@@ -5,7 +6,6 @@ import getpass
 from time import sleep
 from selenium.webdriver.common.keys import Keys
 from collections import OrderedDict
-#from driverdownload import get_driver
 from selenium.common.exceptions import NoSuchElementException
 from selenium import webdriver
 from webdriver_manager.chrome import ChromeDriverManager
